@@ -55,7 +55,7 @@ const Header = () => {
           </Link>
 
           {/* three components */}
-          <Link to="/signin">
+          <Link to="/auth">
             <p>Hello, sign in</p>
             <span>Account & Lists</span>
           </Link>

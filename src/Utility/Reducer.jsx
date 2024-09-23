@@ -5,6 +5,7 @@ export const initialState = {
 };
 
 export const reducer = (state, action) => {
+  console.log(action)
   switch (action.type) {
     case Type.ADD_TO_BASKET:
       // Check if the item exists

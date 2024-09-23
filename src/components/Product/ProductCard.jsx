@@ -26,7 +26,7 @@ const ProductCard = ({ product, flex, renderDesc,renderAdd }) => {
   }
   return (
     <div
-      className={`${classes.card_container} ${
+      className={`${classes.card_container}  ${classes.detail_product} ${
         flex ? classes.product_flexed : ""
       }`}
     >
