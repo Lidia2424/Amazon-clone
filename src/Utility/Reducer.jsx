@@ -2,10 +2,11 @@ import { Type } from "./Action.type";
 
 export const initialState = {
   basket: [],
+  user: null,
 };
 
 export const reducer = (state, action) => {
-  console.log(action)
+  console.log(action);
   switch (action.type) {
     case Type.ADD_TO_BASKET:
       // Check if the item exists
@@ -24,7 +25,7 @@ export const reducer = (state, action) => {
         const updatedBasket = state.basket.map((item) => {
           return item.id === action.item.id
             ? { ...item, amount: item.amount + 1 }
-            : item
+            : item;
         });
 
         return {
@@ -34,9 +35,7 @@ export const reducer = (state, action) => {
       }
 
     case Type.REMOVE_FROM_BASKET:
-      const index = state.basket.findIndex(
-        (item) => item.id === action.id
-      );
+      const index = state.basket.findIndex((item) => item.id === action.id);
       let newBasket = [...state.basket];
 
       if (index >= 0) {
@@ -53,7 +52,16 @@ export const reducer = (state, action) => {
         ...state,
         basket: newBasket,
       };
-
+    case Type.SET_USER:
+      return {
+        ...state,
+        user: action.user,
+      };
+    case Type.EMPTY_BASKET:
+      return {
+        ...state,
+        basket: [],
+      };
     default:
       return state;
   }

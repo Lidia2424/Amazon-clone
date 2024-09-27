@@ -1,45 +1,87 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./SignUp.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../Utility/Firebase";
-import{signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth"
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { DataContext } from "../../components/DataProvider/DataProvider";
+import { Type } from "../../Utility/Action.type";
+import { ClipLoader } from "react-spinners";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const authHandler = (e) => {
-    e.preventDefault()
-    if (e.target.name == "signin") {
+  const [{ user }, dispatch] = useContext(DataContext);
+  const [loading, setLoading] = useState({
+    signIn: false,
+    signUp: false,
+  });
+  const navigate = useNavigate();
+  const navStateData = useLocation();
 
+  const authHandler = (e) => {
+    e.preventDefault();
+    if (e.target.name == "signin") {
       //firebase Auth
-      signInWithEmailAndPassword(auth, email, password).then((userInfo) => {
-       console.log(userInfo)
-      }).catch((err) => {
-       console.log(err)
-     })
-    }else{
+      setLoading({ ...setLoading, signIn: true });
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userInfo) => {
+          dispatch({
+            type: Type.SET_USER,
+            user: userInfo.user,
+          });
+          setLoading({ ...setLoading, signIn: false });
+
+          navigate(navStateData?.state?.redirect || "/");
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading({ ...setLoading, signUp: false });
+        });
+    } else {
+      setLoading({ ...setLoading, signUp: true });
       createUserWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
-          console.log(userInfo);
-        }).catch((err) => {
-          console.log(err);
+          dispatch({
+            type: Type.SET_USER,
+            user: userInfo.user,
+          });
+          setLoading({ ...setLoading, signUp: false });
+          navigate(navStateData?.state?.redirect || "/");
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading({ ...setLoading, signUp: false });
         });
-}
+    }
   };
   return (
     <section className={classes.login}>
       {/* logo */}
 
-      <Link>
+      <Link to={"/"}>
         <img src="../../assets/amazon logo black1.png" />
       </Link>
 
       {/* Signin Form  */}
       <div className={classes.login_container}>
         <h1>Sign In</h1>
-
+        {navStateData?.state?.msg && (
+          <small
+            style={{
+              padding: "5px",
+              textAlign: "center",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            {navStateData?.state?.msg}
+          </small>
+        )}
         <form action="">
           <div>
             <label htmlFor="">E-mail</label>
@@ -66,7 +108,7 @@ const Auth = () => {
             name="signin"
             className={classes.signInBtn}
           >
-            Sign in
+            {loading.signIn ? <ClipLoader color="#000" size={15} /> : "Sign In"}
           </button>
         </form>
         {/* agreement */}
@@ -82,8 +124,15 @@ const Auth = () => {
           name="signup"
           className={classes.registerBtn}
         >
-          Create your Amazon Account
+          {loading.signUp ? (
+            <ClipLoader color="#000" size={15} />
+          ) : (
+            "Create your Amazon Account"
+          )}
         </button>
+        {error && (
+          <small style={{ paddingTop: "5px", color: "red" }}>{error}</small>
+        )}
       </div>
     </section>
   );

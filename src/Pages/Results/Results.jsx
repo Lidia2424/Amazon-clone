@@ -29,7 +29,8 @@ const Results = () => {
     
   return (
     <LayOut>
-      <section>
+      <section >
+
         <h1 style={{ padding: "30px" }}>Results</h1>
         <p style={{ padding: "30px" }}>Category/{categoryName}</p>
         <hr />

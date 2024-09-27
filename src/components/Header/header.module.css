@@ -91,7 +91,7 @@
   font-size: 11px;
 }
 .language {
-  width: 50px;
+  width: 80px;
   display: flex;
   padding: 10px;
 }
@@ -100,6 +100,7 @@
   border: none;
   color: white;
 }
+
 .language img {
   width: 30%;
   padding: 2px;
@@ -141,7 +142,7 @@
 }
 .lower_container ul li,
 .Gaming_container {
-  padding: 8px;
+  padding: 10px;
 }
 .lower_container ul li:first-child {
   display: flex;

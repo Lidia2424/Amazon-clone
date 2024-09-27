@@ -1,0 +1,29 @@
+.container {
+  background-color: #efeeee;
+  padding: 30px;
+}
+
+.orders_container {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.orders_container h2 {
+  border-bottom: 2px solid var(--primary-shade);
+  padding: 20px;
+}
+
+.orders_container p {
+  padding: 12px;
+}
+
+.orders_container img {
+  width: 50px; /* Set a smaller width for the images */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  margin: 5px; /* Add some space around images */
+}
+
+.orders_container div {
+  height: auto !important;
+}
