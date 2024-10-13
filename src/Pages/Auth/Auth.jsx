@@ -64,7 +64,7 @@ const Auth = () => {
       {/* logo */}
 
       <Link to={"/"}>
-        <img src="../../assets/amazon logo black1.png" />
+        <img src="../../../src/assets/amazon logo black.jpeg" />
       </Link>
 
       {/* Signin Form  */}

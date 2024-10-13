@@ -5,9 +5,9 @@
   align-items: center;
 }
 .login img {
-  margin: 30px auto;
+  margin: 20px auto;
   object-fit: contain;
-  width: 100px;
+  width: 140px;
 }
 .login_container {
   width: 350px;
