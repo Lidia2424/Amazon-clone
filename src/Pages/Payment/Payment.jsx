@@ -17,15 +17,13 @@ const Payment = () => {
   const [processing, setProcessing] = useState(false);
 
   // total item
-  const totalItem =basket?.reduce((amount, item) => item.amount + amount, 0);
-
+  const totalItem = basket?.reduce((amount, item) => item.amount + amount, 0);
 
   // total amount
-  const total =basket?.reduce(
-      (amount, item) => item.price * item.amount + amount,
-      0
-    );
-  
+  const total = basket?.reduce(
+    (amount, item) => item.price * item.amount + amount,
+    0
+  );
 
   const stripe = useStripe();
   const elements = useElements();
@@ -45,7 +43,7 @@ const Payment = () => {
         method: "POST",
         url: `/payment/create?total=${total * 100}`,
       });
-      console.log(response.data);
+      // console.log(response.data);
       const clientSecret = response.data?.clientSecret;
 
       // Client-side payment confirmation
